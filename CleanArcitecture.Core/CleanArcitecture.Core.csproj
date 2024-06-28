@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArcitecture.Domain\CleanArcitecture.Domain.csproj" />
+    <ProjectReference Include="..\CleanArcitecture.Infrastructure\CleanArcitecture.Infrastructure.csproj" />
+    <ProjectReference Include="..\CleanArcitecture.Service\CleanArcitecture.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Students\Command\Handlers\" />
+    <Folder Include="Features\Students\Command\Models\" />
+    <Folder Include="Features\Students\Command\Validators\" />
+    <Folder Include="Mapping\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.3.0" />
+  </ItemGroup>
+
+</Project>
