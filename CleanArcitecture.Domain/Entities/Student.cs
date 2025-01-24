@@ -8,7 +8,8 @@ namespace CleanArcitecture.Domain.Entities
         [Key]
         public int StudID { get; set; }
         [StringLength(200)]
-        public string Name { get; set; }
+        public string NameAr { get; set; }
+        public string NameEn { get; set; }
         [StringLength(500)]
         public string Address { get; set; }
         [StringLength(500)]

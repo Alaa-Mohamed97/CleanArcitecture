@@ -1,9 +1,10 @@
-﻿using CleanArcitecture.Domain.Entities;
+﻿using CleanArcitecture.Core.Base;
+using CleanArcitecture.Core.Features.Students.Queries.DTOs;
 using MediatR;
 
 namespace CleanArcitecture.Core.Features.Students.Queries.Models
 {
-    public class GetStudentListQuery : IRequest<List<Student>>
+    public class GetStudentListQuery : IRequest<Response<List<StudentListDTO>>>
     {
     }
 }

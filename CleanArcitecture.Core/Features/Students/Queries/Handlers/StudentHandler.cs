@@ -1,21 +1,34 @@
-﻿using CleanArcitecture.Core.Features.Students.Queries.Models;
-using CleanArcitecture.Domain.Entities;
+﻿using AutoMapper;
+using CleanArcitecture.Core.Base;
+using CleanArcitecture.Core.Features.Students.Queries.DTOs;
+using CleanArcitecture.Core.Features.Students.Queries.Models;
 using CleanArcitecture.Service.Abstracts;
 using MediatR;
 
 namespace CleanArcitecture.Core.Features.Students.Queries.Handlers
 {
-    public class StudentHandler : IRequestHandler<GetStudentListQuery, List<Student>>
+    public class StudentHandler(IStudentService studentService, IMapper mapper) : ResponseHandler,
+                IRequestHandler<GetStudentListQuery, Response<List<StudentListDTO>>>,
+                IRequestHandler<GetStudentDetailsQuery, Response<StudentDetailsDto>>
     {
-        private readonly IStudentService _studentService;
+        private readonly IStudentService _studentService = studentService;
+        private readonly IMapper _mapper = mapper;
+        // get student list
+        public async Task<Response<List<StudentListDTO>>> Handle(GetStudentListQuery request, CancellationToken cancellationToken)
+        {
+            var studentList = await _studentService.GetStudentsListAsync();
+            var result = _mapper.Map<List<StudentListDTO>>(studentList);
 
-        public StudentHandler(IStudentService studentService)
-        {
-            _studentService = studentService;
+            return Success(result, null, new { count = result.Count() });
         }
-        public async Task<List<Student>> Handle(GetStudentListQuery request, CancellationToken cancellationToken)
+        // get student by id
+        public async Task<Response<StudentDetailsDto>> Handle(GetStudentDetailsQuery request, CancellationToken cancellationToken)
         {
-            return await _studentService.GetStudentsListAsync();
+            var student = await _studentService.GetStudentByIdAsync(request.Id);
+            if (student == null)
+                return NotFound<StudentDetailsDto>();
+            var result = _mapper.Map<StudentDetailsDto>(student);
+            return Success(result);
         }
     }
 }
